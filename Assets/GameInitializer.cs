@@ -2,17 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameInitializer : MonoBehaviour {
+public class GameInitializer : MonoBehaviour
+{
+    public References _references;
 
-    public References References;
+    void Start()
+    {
+        LoadGame();
+    }
 
+    public void LoadGame()
+    {
+        InstantiatePrefabs();
+    }
 
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public void InstantiatePrefabs()
+    {
+        Instantiate(_references._soundPrefab);
+        Instantiate(_references._levelPrefab);
+        Instantiate(_references._leftPipePrefab);
+        Instantiate(_references._rightPipePrefab);
+        Instantiate(_references._donkeyKongPrefab);
+    }
 }
