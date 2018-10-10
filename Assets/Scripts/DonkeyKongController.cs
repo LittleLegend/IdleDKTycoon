@@ -9,27 +9,59 @@ using UnityEngine.Experimental.UIElements;
 using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
 
-public class DonkeyKongController : MonoBehaviour
+public class DonkeyKongController 
 {
+
+    private GameObject _donkeyKongPrefab;
+    private DonkeyKongView _donkeyKongView;
+
     [SerializeField] public float _projectileSpeed;
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _shotCooldown;
-    [SerializeField] private float _collectableDuration;
+    
     [Space(10)]
 
     private GameObject projectile;
 
 
-    Animator DonkeyAnimator;
+    
     private float _timeSinceLastShot;
     public bool _collectableRunning;
     private const float MaxOffset = 6.5f;
 
+    public DonkeyKongController(GameObject donkeyKongPrefab)
+    {
+        _donkeyKongPrefab = donkeyKongPrefab;
+        _donkeyKongView = donkeyKongPrefab.GetComponent<DonkeyKongView>();
+    }
+
     void Start()
     {
-       DonkeyAnimator = GetComponent<Animator>();
+       
         _timeSinceLastShot = _shotCooldown;
         projectile = InventoryManager.Instance._collectablePrefabDictionary[CollectableEnum.Normal];
+    }
+
+
+    private void GoLeft()
+    {
+
+        gameObject.transform.position += Vector3.left * Time.deltaTime * _movementSpeed;
+        ClampXPosition();
+    }
+
+    private void GoRight()
+    {
+        gameObject.transform.position += Vector3.right * Time.deltaTime * _movementSpeed;
+        ClampXPosition();
+    }
+
+    private void Fire()
+    {
+        DonkeyAnimator.SetBool("shoot", true);
+        var barrelInstance = Instantiate(projectile, new Vector2(transform.position.x, transform.position.y + 0.5f), Quaternion.identity);
+
+        SoundEffectService.Instance.PlayClip(ClipIdentifier.DonkeyKong);
     }
 
     void Update ()
@@ -63,17 +95,16 @@ public class DonkeyKongController : MonoBehaviour
                 if (InventoryManager.Instance._collectableProjectileDictionary[obj])
                 {
                     projectile = InventoryManager.Instance._collectablePrefabDictionary[obj];
-                    StartCoroutine(CollectableTimer());
-                }
+                   
                 else
                 {
                     if (obj == CollectableEnum.Daisy)
                     {
-                        Instantiate(InventoryManager.Instance._collectablePrefabDictionary[obj], transform.position, Quaternion.identity);
+                      
                     }
                     else
                     {
-                        Instantiate(InventoryManager.Instance._collectablePrefabDictionary[obj]);
+                        
                     }
                 }
             
@@ -101,26 +132,9 @@ public class DonkeyKongController : MonoBehaviour
         _timeSinceLastShot = 0f;
     }
 
-    private void Fire()
-    {
-        DonkeyAnimator.SetBool("shoot", true);
-        var barrelInstance = Instantiate(projectile, new Vector2(transform.position.x, transform.position.y+0.5f), Quaternion.identity);
-        
-        SoundEffectService.Instance.PlayClip(ClipIdentifier.DonkeyKong);
-    }
+    
 
-    private void GoLeft()
-    {
-        
-        gameObject.transform.position += Vector3.left * Time.deltaTime * _movementSpeed;
-        ClampXPosition();
-    }
-
-    private void GoRight()
-    {
-        gameObject.transform.position += Vector3.right * Time.deltaTime * _movementSpeed;
-        ClampXPosition();
-    }
+  
 
     private void ClampXPosition()
     {
@@ -129,17 +143,7 @@ public class DonkeyKongController : MonoBehaviour
         transform.position = position;
     }
 
-    public void ReceivedCollectable(CollectableEnum typeOfCollectable)
-    {
-        InventoryManager.Instance.AddCollectable(typeOfCollectable);
-        SoundEffectService.Instance.PlayClip(ClipIdentifier.ItemsCollect);
-    }
+    
 
-    IEnumerator CollectableTimer()
-    {
-        _collectableRunning = true;
-        yield return new WaitForSeconds(_collectableDuration);
-        projectile = InventoryManager.Instance._collectablePrefabDictionary[CollectableEnum.Normal];
-        _collectableRunning = false;
-    }
+    
 }

@@ -19,7 +19,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4506579403044724}
-  - component: {fileID: 114957738996937116}
   - component: {fileID: 212316089804674430}
   - component: {fileID: 61151133834040802}
   - component: {fileID: 95423018444979186}
@@ -86,22 +85,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114957738996937116
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1963399318216352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39a3321fdb1f09f468bf0b8a2793eb58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _projectileSpeed: 3
-  _movementSpeed: 6.8
-  _shotCooldown: 1
-  _collectableDuration: 5
-  _collectableRunning: 0
 --- !u!212 &212316089804674430
 SpriteRenderer:
   m_ObjectHideFlags: 1

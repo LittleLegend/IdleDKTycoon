@@ -5,16 +5,18 @@ using UnityEngine;
 public class GameInitializer : MonoBehaviour
 {
     public References _references;
+    private StateMachine _stateMachine;
+    private DonkeyKongController _donkeyKongController;
 
     void Start()
     {
-        LoadGame();
-    }
+        _stateMachine = new StateMachine(_references);
+        _donkeyKongController = new DonkeyKongController(_references._donkeyKongPrefab);
 
-    public void LoadGame()
-    {
         InstantiatePrefabs();
     }
+
+    
 
     public void InstantiatePrefabs()
     {
@@ -22,6 +24,6 @@ public class GameInitializer : MonoBehaviour
         Instantiate(_references._levelPrefab);
         Instantiate(_references._leftPipePrefab);
         Instantiate(_references._rightPipePrefab);
-        Instantiate(_references._donkeyKongPrefab);
+        
     }
 }
