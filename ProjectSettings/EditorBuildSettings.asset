@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Start.unity
     guid: 6980525c7e0a14940ad885438b72e35c
   - enabled: 1
-    path: Assets/Scenes/ToniScene.unity
+    path: Assets/Scenes/MainScene.unity
     guid: 418c747fb3a75f64a934d9e797d03f7a
   m_configObjects: {}
