@@ -14,113 +14,43 @@ public class DonkeyKongController
 
     private GameObject _donkeyKongPrefab;
     private DonkeyKongView _donkeyKongView;
+    private DonkeyKongModel _donkeyKongModel;
+    
 
-    [SerializeField] public float _projectileSpeed;
-    [SerializeField] private float _movementSpeed;
-    [SerializeField] private float _shotCooldown;
-
-    [Space(10)]
-
-    private GameObject projectile;
-
-
-
-    private float _timeSinceLastShot;
-    public bool _collectableRunning;
-    private const float MaxOffset = 6.5f;
-
-    public DonkeyKongController(GameObject donkeyKongPrefab)
+    public DonkeyKongController(GameObject donkeyKongPrefab, DonkeyKongModel donkeyKongModel)
     {
         _donkeyKongPrefab = donkeyKongPrefab;
         _donkeyKongView = donkeyKongPrefab.GetComponent<DonkeyKongView>();
+        _donkeyKongModel = donkeyKongModel;
     }
 
-    void Start()
+    public void Start()
     {
+        _donkeyKongModel.StartAI();
 
-        _timeSinceLastShot = _shotCooldown;
+    }
+
+    public void Stop()
+    {
+        _donkeyKongModel.StopAI();
 
     }
 
 
-    private void GoLeft()
+    public void Throw()
     {
-
-        
-        ClampXPosition();
-    }
-
-    private void GoRight()
-    {
-        
-        ClampXPosition();
-    }
-
-    private void Fire()
-    {
-        
-        
-
         SoundEffectService.Instance.PlayClip(ClipIdentifier.DonkeyKong);
+
     }
 
-    void Update()
+    public void MoveLeft()
     {
-        if (StateController.IsPaused) return;
-
-        if (_timeSinceLastShot < _shotCooldown)
-        {
-            _timeSinceLastShot += Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        {
-            GoLeft();
-
-        }
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        {
-            GoRight();
-
-        }
-        if (!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.A))
-        {
-
-        }
-
-        
-
-        if (Input.GetKey(KeyCode.Space))
-        {
-               TryFiring();
-        }
-            else
-            {
-
-            }
-        
-
-
-        
-
-
 
     }
 
-    private void TryFiring()
-        {
-            if (_timeSinceLastShot < _shotCooldown) return;
-            Fire();
-            _timeSinceLastShot = 0f;
-        }
+    public void MoveRight()
+    {
 
-
-
-
-
-        private void ClampXPosition()
-        {
-            
-            
-            
-        }
+    }
+    
 }

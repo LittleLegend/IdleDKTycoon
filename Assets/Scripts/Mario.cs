@@ -32,31 +32,20 @@ public class Mario : MonoBehaviour {
 	
 	private void Update ()
 	{
-	    if (StateController.IsPaused)
-	    {
-	        Move(Vector2.zero);
-	    }
-	    else
-	    {
+	    
+	    
             Move(_movementDirection);
             if (_shouldWalkTowardsDaisy && !_isClimbing && !_isJumping && _latestDaisyTransform)
                 WalkTowardsDaisy();
 	        Boundary();
-        }
+        
     }
 
     public IEnumerator JumpCheck()
     {
         while (true)
         {
-            if (Random.Range(1, 101) <= _jumpChance && 
-                !_isJumping && 
-                !_isClimbing && 
-                !_isDead &&
-                !StateController.IsPaused)
-            {
-                StartCoroutine(Jump(0.5f,3));
-            }
+            
             yield return new WaitForSeconds(1);
         }
     }
@@ -118,7 +107,7 @@ public class Mario : MonoBehaviour {
 
     public void Move(Vector2 movement)
     {
-        if (StateController.IsPaused)
+       
             movement = Vector2.zero;
         if (movement != Vector2.zero)
             _movementDirection = movement;
@@ -161,7 +150,7 @@ public class Mario : MonoBehaviour {
             case ("Barrel"): Die(); break; 
             case ("Luigi"): Die(); break;
             case ("Pow"): Die(); break;
-            case ("Pauli"): StateController.GameOver(); break;
+            
             case ("Boundary"): WalkAwayFromBoundary(collision.transform); break;
             case ("Daisy"): StartWalkingTowardsDaisy(collision.transform); break;
         }
@@ -180,7 +169,7 @@ public class Mario : MonoBehaviour {
         if (_isDead) return;
         SoundEffectService.Instance.PlayClip(ClipIdentifier.Death);
         
-        GameObject.Find("Score").GetComponent<ScoreManager>().AddPoint();
+        
         _marioAnimator.SetBool("dead", true);
         StartCoroutine(Dying());
     }
