@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class DonkeyKongModel{
 
-    private DonkeyKongController _donkeyKongController;
+    
     private IDonkeyKongAI _donkeyKongAI;
 
 	public DonkeyKongModel(DonkeyKongController donkeyKongController)
     {
-        _donkeyKongController = donkeyKongController;
         _donkeyKongAI = new DumbDonkeyKongAI(this);
     }
 
